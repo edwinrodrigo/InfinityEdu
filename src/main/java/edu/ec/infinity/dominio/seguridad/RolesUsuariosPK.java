@@ -6,6 +6,7 @@
 package edu.ec.infinity.dominio.seguridad;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -20,55 +21,60 @@ public class RolesUsuariosPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "cod_rol")
-    private int codRol;
+    private Long codRol;
     @Basic(optional = false)
     @NotNull
     @Column(name = "cod_usuario")
-    private int codUsuario;
+    private Long codUsuario;
 
     public RolesUsuariosPK() {
     }
 
-    public RolesUsuariosPK(int codRol, int codUsuario) {
+    public RolesUsuariosPK(Long codRol, Long codUsuario) {
         this.codRol = codRol;
         this.codUsuario = codUsuario;
     }
 
-    public int getCodRol() {
+    public Long getCodRol() {
         return codRol;
     }
 
-    public void setCodRol(int codRol) {
+    public void setCodRol(Long codRol) {
         this.codRol = codRol;
     }
 
-    public int getCodUsuario() {
+    public Long getCodUsuario() {
         return codUsuario;
     }
 
-    public void setCodUsuario(int codUsuario) {
+    public void setCodUsuario(Long codUsuario) {
         this.codUsuario = codUsuario;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (int) codRol;
-        hash += (int) codUsuario;
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.codRol);
+        hash = 37 * hash + Objects.hashCode(this.codUsuario);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof RolesUsuariosPK)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        RolesUsuariosPK other = (RolesUsuariosPK) object;
-        if (this.codRol != other.codRol) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        if (this.codUsuario != other.codUsuario) {
+        final RolesUsuariosPK other = (RolesUsuariosPK) obj;
+        if (!Objects.equals(this.codRol, other.codRol)) {
+            return false;
+        }
+        if (!Objects.equals(this.codUsuario, other.codUsuario)) {
             return false;
         }
         return true;
@@ -76,7 +82,8 @@ public class RolesUsuariosPK implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.ec.infinity.RolesUsuariosPK[ codRol=" + codRol + ", codUsuario=" + codUsuario + " ]";
+        return "RolesUsuariosPK{" + "codRol=" + codRol + ", codUsuario=" + codUsuario + '}';
     }
+
     
 }

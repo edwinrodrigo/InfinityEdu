@@ -3,10 +3,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.infinity</groupId>
-    <artifactId>InfinitySofware</artifactId>
+    <artifactId>InfinitySoftware</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
-    <name>InfinitySofware</name>
+    <name>InfinitySoftware</name>
 
     <dependencies>
         <!-- DEPENDENCIAS-JARS EMBEBIDOS EN EL SERVIDOR -->
@@ -17,6 +17,7 @@
             <version>1.1.0.Final-redhat-1</version>
             <scope>provided</scope>
         </dependency>
+        
         <!-- https://mvnrepository.com/artifact/org.hibernate.javax.persistence/hibernate-jpa-2.1-api -->
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
@@ -24,6 +25,7 @@
             <version>1.0.0.Final-redhat-1</version>
             <scope>provided</scope>
         </dependency>
+        
         <!-- https://mvnrepository.com/artifact/org.jboss.spec.javax.transaction/jboss-transaction-api_1.2_spec -->
         <dependency>
             <groupId>org.jboss.spec.javax.transaction</groupId>
@@ -31,6 +33,7 @@
             <version>1.0.0.Final-redhat-1</version>
             <scope>provided</scope>
         </dependency>
+        
         <!-- https://mvnrepository.com/artifact/org.jboss.spec.javax.ejb/jboss-ejb-api_3.2_spec -->
         <dependency>
             <groupId>org.jboss.spec.javax.ejb</groupId>
@@ -47,6 +50,14 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.jboss.spec.javax.faces/jboss-jsf-api_2.2_spec -->
+        <dependency>
+            <groupId>org.jboss.spec.javax.faces</groupId>
+            <artifactId>jboss-jsf-api_2.2_spec</artifactId>
+            <version>2.2.12.redhat-1</version>
+            <scope>provided</scope>
+        </dependency>
+
 
         <!-- DEPENDENCIAS-NORMALES -->
         <dependency>
@@ -54,6 +65,14 @@
             <artifactId>primefaces-extensions</artifactId>
             <version>6.0.0</version>
         </dependency>
+        
+        <!-- TEMA - INFINITY -->
+        <dependency>
+            <groupId>org.theme.</groupId>
+            <artifactId>paradise-theme</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        
     </dependencies>
 
     <build>
@@ -74,11 +93,11 @@
                 <version>3.2.0</version>
                 <configuration>
                         <webResources>
-                                <resource>
-                                        <!-- this is relative to the pom.xml directory -->
-                                        <directory>src/main/resources</directory>
-    <!-- 							<exclude>META-INF</exclude> -->
-                                </resource>
+                            <resource>
+                                <!-- this is relative to the pom.xml directory -->
+                                <directory>src/main/resources</directory>
+                                <!--<exclude>META-INF</exclude> -->
+                            </resource>
                         </webResources>
                         <archive>
                                 <manifest>

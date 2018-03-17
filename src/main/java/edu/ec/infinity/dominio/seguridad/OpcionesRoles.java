@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author danielPC
  */
 @Entity
-@Table(name = "opciones_roles")
+@Table(name = "segOpcionesRoles")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "OpcionesRoles.findAll", query = "SELECT o FROM OpcionesRoles o"),
@@ -70,7 +70,7 @@ public class OpcionesRoles implements Serializable {
         this.opcionesRolesPK = opcionesRolesPK;
     }
 
-    public OpcionesRoles(int codOpcion, int codRol) {
+    public OpcionesRoles(Long codOpcion, Long codRol) {
         this.opcionesRolesPK = new OpcionesRolesPK(codOpcion, codRol);
     }
 

@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author danielPC
  */
 @Entity
-@Table(name = "roles_usuarios")
+@Table(name = "segRolesUsuarios")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RolesUsuarios.findAll", query = "SELECT r FROM RolesUsuarios r"),
@@ -70,7 +70,7 @@ public class RolesUsuarios implements Serializable {
         this.rolesUsuariosPK = rolesUsuariosPK;
     }
 
-    public RolesUsuarios(int codRol, int codUsuario) {
+    public RolesUsuarios(Long codRol, Long codUsuario) {
         this.rolesUsuariosPK = new RolesUsuariosPK(codRol, codUsuario);
     }
 
