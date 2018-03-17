@@ -48,10 +48,11 @@
        </ui:define>
 
     <ui:define name="content">
-        <h:form>
-            <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+        <h:form id="form" >
+            <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
             <h1 class="topbar-logo"> INICIO....</h1>
-            
+            <span class="overview-box-details-count">#{homeMB.mensaje}</span>
+            <p:commandButton value="GROWL" actionListener="#{homeMB.mensajeGrowl}" update="growl" ></p:commandButton>
         </h:form>
     </ui:define>
 

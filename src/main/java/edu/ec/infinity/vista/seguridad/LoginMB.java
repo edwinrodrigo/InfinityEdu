@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.infinity.vista.seguridad;
+package edu.ec.infinity.vista.seguridad;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -39,17 +39,21 @@ public class LoginMB {
     }
    
     public void login(ActionEvent event) {
+    	FacesContext context = FacesContext.getCurrentInstance();
         FacesMessage message = null;
         boolean loggedIn = false;
         System.out.println(this.username+"-"+this.password);
         if(username != null && username.equals("admin") && password != null && password.equals("admin")) {
             loggedIn = true;
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", username);
+            context.addMessage(null, message);
+            context.getExternalContext().getFlash().setKeepMessages(true);
         } else {
             loggedIn = false;
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Invalid credentials");
+            context.addMessage(null, message);
         }
-        FacesContext.getCurrentInstance().addMessage(null, message);
+        
     }   
     
     public String doLogin() {
