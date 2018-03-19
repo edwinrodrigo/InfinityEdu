@@ -5,7 +5,7 @@
  */
 package edu.ec.infinity.bo.seguridad;
 
-import edu.ec.infinity.dominio.seguridad.Usuarios;
+import edu.ec.infinity.dominio.seguridad.Usuario;
 import edu.ec.infinity.eao.seguridad.IUsuarioEAO;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -21,11 +21,11 @@ public class UsuarioBO {
     @EJB
     private IUsuarioEAO usuarioEAO;
     
-    public void guardar(Usuarios usuario){
+    public void guardar(Usuario usuario){
         usuarioEAO.create(usuario);
     }
     
-    public Usuarios merge(Usuarios usuario){
+    public Usuario merge(Usuario usuario){
         return usuarioEAO.edit(usuario);
     }
 }

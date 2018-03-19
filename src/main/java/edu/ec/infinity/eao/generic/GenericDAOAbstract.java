@@ -16,7 +16,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
@@ -42,7 +45,7 @@ public abstract class GenericDAOAbstract<T, PK extends Serializable> implements
 	//@Resource(mappedName = "java:/datasources/CasabacaDS")
 	@PersistenceContext(unitName = "infinityPU")
 	protected EntityManager em;
-
+	
 	private Class<T> type;
 
 	public GenericDAOAbstract() {
@@ -391,4 +394,53 @@ public abstract class GenericDAOAbstract<T, PK extends Serializable> implements
 			return (List) results;
 		}
 
+	   
+		@SuppressWarnings("unchecked")
+		@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+		public T findUniqueByProperties(HashMap<String, Object> hashmap)
+		{
+			try
+			{
+				return (T)queryFormatByProperties(hashmap).getSingleResult();
+			}catch (NoResultException e)
+			{
+				return null;
+			}
+		}
+		
+		@SuppressWarnings("unchecked")
+		@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+		public List<T> findByProperties(HashMap<String, Object> hashmap)
+		{
+			return queryFormatByProperties(hashmap).getResultList();
+		}
+		
+		
+		protected Query queryFormatByProperties(HashMap<String, Object> hashmap)
+		{
+			String s = (new StringBuilder()).append("select modelo from ").append(type.getSimpleName()).append(" modelo ").toString();
+			Set<String> set = hashmap.keySet();
+			int i = 0;
+			for( String sKey : set)
+			{
+				if(i == 0)
+					s = s + " where " + sKey + " = :valor_" + i;
+				else
+					s = s + " and " + sKey + " = :valor_" + i;
+				i++;
+			}
+			Query query = getEntityManager().createQuery(s);
+			i = 0;
+			for( String sKey : set)
+			{
+				query.setParameter("valor_"+i, hashmap.get(sKey));
+				i++;
+			}
+
+			return query;
+		} 
+		
+		private EntityManager getEntityManager() {
+			return this.em;
+		}
 }

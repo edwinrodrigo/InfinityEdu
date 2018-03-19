@@ -15,6 +15,9 @@ package edu.ec.infinity.eao.generic;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 
@@ -80,4 +83,8 @@ public interface GenericDAO<T, PK extends Serializable> {
 			String sqlMapping, int startFrom, int length);
 	
 	public void remove(T entidad) throws PersistenceException;
+	
+	public T findUniqueByProperties(HashMap<String, Object> hashmap);
+	
+	public List<T> findByProperties(HashMap<String, Object> hashmap);
 }

@@ -5,7 +5,7 @@
  */
 package edu.ec.infinity.eao.seguridad;
 
-import edu.ec.infinity.dominio.seguridad.Usuarios;
+import edu.ec.infinity.dominio.seguridad.Usuario;
 import edu.ec.infinity.eao.generic.GenericDAO;
 import javax.ejb.Remote;
 
@@ -14,6 +14,6 @@ import javax.ejb.Remote;
  * @author Edwin
  */
 @Remote
-public interface IUsuarioEAO extends GenericDAO<Usuarios, Long> {
+public interface IUsuarioEAO extends GenericDAO<Usuario, Long> {
     
 }

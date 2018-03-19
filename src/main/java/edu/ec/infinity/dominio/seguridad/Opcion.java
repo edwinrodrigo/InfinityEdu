@@ -32,22 +32,22 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "segOpciones")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Opciones.findAll", query = "SELECT o FROM Opciones o"),
-    @NamedQuery(name = "Opciones.findByCodOpcion", query = "SELECT o FROM Opciones o WHERE o.codOpcion = :codOpcion"),
-    @NamedQuery(name = "Opciones.findByNombre", query = "SELECT o FROM Opciones o WHERE o.nombre = :nombre"),
-    @NamedQuery(name = "Opciones.findByDescripcion", query = "SELECT o FROM Opciones o WHERE o.descripcion = :descripcion"),
-    @NamedQuery(name = "Opciones.findByIcono", query = "SELECT o FROM Opciones o WHERE o.icono = :icono"),
-    @NamedQuery(name = "Opciones.findByUrl", query = "SELECT o FROM Opciones o WHERE o.url = :url"),
-    @NamedQuery(name = "Opciones.findByAccion", query = "SELECT o FROM Opciones o WHERE o.accion = :accion"),
-    @NamedQuery(name = "Opciones.findByOrden", query = "SELECT o FROM Opciones o WHERE o.orden = :orden"),
-    @NamedQuery(name = "Opciones.findByOpcionPadre", query = "SELECT o FROM Opciones o WHERE o.opcionPadre = :opcionPadre"),
-    @NamedQuery(name = "Opciones.findByEstado", query = "SELECT o FROM Opciones o WHERE o.estado = :estado"),
-    @NamedQuery(name = "Opciones.findByUsuarioIngreso", query = "SELECT o FROM Opciones o WHERE o.usuarioIngreso = :usuarioIngreso"),
-    @NamedQuery(name = "Opciones.findByFechaIngreso", query = "SELECT o FROM Opciones o WHERE o.fechaIngreso = :fechaIngreso"),
-    @NamedQuery(name = "Opciones.findByUsuarioModificacion", query = "SELECT o FROM Opciones o WHERE o.usuarioModificacion = :usuarioModificacion"),
-    @NamedQuery(name = "Opciones.findByFechaModificacion", query = "SELECT o FROM Opciones o WHERE o.fechaModificacion = :fechaModificacion"),
-    @NamedQuery(name = "Opciones.findByModulo", query = "SELECT o FROM Opciones o WHERE o.modulo = :modulo")})
-public class Opciones implements Serializable {
+    @NamedQuery(name = "Opciones.findAll", query = "SELECT o FROM Opcion o"),
+    @NamedQuery(name = "Opciones.findByCodOpcion", query = "SELECT o FROM Opcion o WHERE o.codOpcion = :codOpcion"),
+    @NamedQuery(name = "Opciones.findByNombre", query = "SELECT o FROM Opcion o WHERE o.nombre = :nombre"),
+    @NamedQuery(name = "Opciones.findByDescripcion", query = "SELECT o FROM Opcion o WHERE o.descripcion = :descripcion"),
+    @NamedQuery(name = "Opciones.findByIcono", query = "SELECT o FROM Opcion o WHERE o.icono = :icono"),
+    @NamedQuery(name = "Opciones.findByUrl", query = "SELECT o FROM Opcion o WHERE o.url = :url"),
+    @NamedQuery(name = "Opciones.findByAccion", query = "SELECT o FROM Opcion o WHERE o.accion = :accion"),
+    @NamedQuery(name = "Opciones.findByOrden", query = "SELECT o FROM Opcion o WHERE o.orden = :orden"),
+    @NamedQuery(name = "Opciones.findByOpcionPadre", query = "SELECT o FROM Opcion o WHERE o.opcionPadre = :opcionPadre"),
+    @NamedQuery(name = "Opciones.findByEstado", query = "SELECT o FROM Opcion o WHERE o.estado = :estado"),
+    @NamedQuery(name = "Opciones.findByUsuarioIngreso", query = "SELECT o FROM Opcion o WHERE o.usuarioIngreso = :usuarioIngreso"),
+    @NamedQuery(name = "Opciones.findByFechaIngreso", query = "SELECT o FROM Opcion o WHERE o.fechaIngreso = :fechaIngreso"),
+    @NamedQuery(name = "Opciones.findByUsuarioModificacion", query = "SELECT o FROM Opcion o WHERE o.usuarioModificacion = :usuarioModificacion"),
+    @NamedQuery(name = "Opciones.findByFechaModificacion", query = "SELECT o FROM Opcion o WHERE o.fechaModificacion = :fechaModificacion"),
+    @NamedQuery(name = "Opciones.findByModulo", query = "SELECT o FROM Opcion o WHERE o.modulo = :modulo")})
+public class Opcion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -94,10 +94,10 @@ public class Opciones implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "opciones", fetch = FetchType.EAGER)
     private List<OpcionesRoles> opcionesRolesList;
 
-    public Opciones() {
+    public Opcion() {
     }
 
-    public Opciones(Long codOpcion) {
+    public Opcion(Long codOpcion) {
         this.codOpcion = codOpcion;
     }
 
@@ -232,10 +232,10 @@ public class Opciones implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Opciones)) {
+        if (!(object instanceof Opcion)) {
             return false;
         }
-        Opciones other = (Opciones) object;
+        Opcion other = (Opcion) object;
         if ((this.codOpcion == null && other.codOpcion != null) || (this.codOpcion != null && !this.codOpcion.equals(other.codOpcion))) {
             return false;
         }

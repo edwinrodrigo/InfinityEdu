@@ -58,10 +58,10 @@ public class RolesUsuarios implements Serializable {
     private Date fechaModificacion;
     @JoinColumn(name = "cod_usuario", referencedColumnName = "cod_usuario", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Usuarios usuario;
+    private Usuario usuario;
     @JoinColumn(name = "cod_rol", referencedColumnName = "cod_rol", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Roles roles;
+    private Rol roles;
 
     public RolesUsuarios() {
     }
@@ -122,19 +122,19 @@ public class RolesUsuarios implements Serializable {
         this.fechaModificacion = fechaModificacion;
     }
 
-    public Usuarios getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuarios usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 
-    public Roles getRoles() {
+    public Rol getRoles() {
         return roles;
     }
 
-    public void setRoles(Roles roles) {
+    public void setRoles(Rol roles) {
         this.roles = roles;
     }
 

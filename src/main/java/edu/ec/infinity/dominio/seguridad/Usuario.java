@@ -30,27 +30,31 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author danielPC
  */
 @Entity
-@Table(name = "segRoles")
+@Table(name = "segUsuarios")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Roles.findAll", query = "SELECT r FROM Roles r"),
-    @NamedQuery(name = "Roles.findByCodRol", query = "SELECT r FROM Roles r WHERE r.codRol = :codRol"),
-    @NamedQuery(name = "Roles.findByNombre", query = "SELECT r FROM Roles r WHERE r.nombre = :nombre"),
-    @NamedQuery(name = "Roles.findByEstado", query = "SELECT r FROM Roles r WHERE r.estado = :estado"),
-    @NamedQuery(name = "Roles.findByUsuarioIngreso", query = "SELECT r FROM Roles r WHERE r.usuarioIngreso = :usuarioIngreso"),
-    @NamedQuery(name = "Roles.findByFechaIngreso", query = "SELECT r FROM Roles r WHERE r.fechaIngreso = :fechaIngreso"),
-    @NamedQuery(name = "Roles.findByUsuarioModificacion", query = "SELECT r FROM Roles r WHERE r.usuarioModificacion = :usuarioModificacion"),
-    @NamedQuery(name = "Roles.findByFechaModificacion", query = "SELECT r FROM Roles r WHERE r.fechaModificacion = :fechaModificacion")})
-public class Roles implements Serializable {
+    @NamedQuery(name = "Usuarios.findAll", query = "SELECT u FROM Usuario u"),
+    @NamedQuery(name = "Usuarios.findByCodUsuario", query = "SELECT u FROM Usuario u WHERE u.codUsuario = :codUsuario"),
+    @NamedQuery(name = "Usuarios.findByUsuario", query = "SELECT u FROM Usuario u WHERE u.usuario = :usuario"),
+    @NamedQuery(name = "Usuarios.findByClave", query = "SELECT u FROM Usuario u WHERE u.clave = :clave"),
+    @NamedQuery(name = "Usuarios.findByEstado", query = "SELECT u FROM Usuario u WHERE u.estado = :estado"),
+    @NamedQuery(name = "Usuarios.findByUsuarioIngreso", query = "SELECT u FROM Usuario u WHERE u.usuarioIngreso = :usuarioIngreso"),
+    @NamedQuery(name = "Usuarios.findByFechaIngreso", query = "SELECT u FROM Usuario u WHERE u.fechaIngreso = :fechaIngreso"),
+    @NamedQuery(name = "Usuarios.findByUsuarioModificacion", query = "SELECT u FROM Usuario u WHERE u.usuarioModificacion = :usuarioModificacion"),
+    @NamedQuery(name = "Usuarios.findByFechaModificacion", query = "SELECT u FROM Usuario u WHERE u.fechaModificacion = :fechaModificacion")})
+public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "cod_rol")
-    private Long codRol;
-    @Size(max = 50)
-    @Column(name = "nombre")
-    private String nombre;
+    @Column(name = "cod_usuario")
+    private Long codUsuario;
+    @Size(max = 10)
+    @Column(name = "usuario")
+    private String usuario;
+    @Size(max = 10)
+    @Column(name = "clave")
+    private String clave;
     @Size(max = 1)
     @Column(name = "estado")
     private String estado;
@@ -66,32 +70,38 @@ public class Roles implements Serializable {
     @Column(name = "fecha_modificacion")
     @Temporal(TemporalType.DATE)
     private Date fechaModificacion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roles", fetch = FetchType.EAGER)
-    private List<OpcionesRoles> opcionesRolesList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roles", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario", fetch = FetchType.LAZY)
     private List<RolesUsuarios> rolesUsuariosList;
 
-    public Roles() {
+    public Usuario() {
     }
 
-    public Roles(Long codRol) {
-        this.codRol = codRol;
+    public Usuario(Long codUsuario) {
+        this.codUsuario = codUsuario;
     }
 
-    public Long getCodRol() {
-        return codRol;
+    public Long getCodUsuario() {
+        return codUsuario;
     }
 
-    public void setCodRol(Long codRol) {
-        this.codRol = codRol;
+    public void setCodUsuario(Long codUsuario) {
+        this.codUsuario = codUsuario;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
     }
 
     public String getEstado() {
@@ -135,15 +145,6 @@ public class Roles implements Serializable {
     }
 
     @XmlTransient
-    public List<OpcionesRoles> getOpcionesRolesList() {
-        return opcionesRolesList;
-    }
-
-    public void setOpcionesRolesList(List<OpcionesRoles> opcionesRolesList) {
-        this.opcionesRolesList = opcionesRolesList;
-    }
-
-    @XmlTransient
     public List<RolesUsuarios> getRolesUsuariosList() {
         return rolesUsuariosList;
     }
@@ -155,18 +156,18 @@ public class Roles implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (codRol != null ? codRol.hashCode() : 0);
+        hash += (codUsuario != null ? codUsuario.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Roles)) {
+        if (!(object instanceof Usuario)) {
             return false;
         }
-        Roles other = (Roles) object;
-        if ((this.codRol == null && other.codRol != null) || (this.codRol != null && !this.codRol.equals(other.codRol))) {
+        Usuario other = (Usuario) object;
+        if ((this.codUsuario == null && other.codUsuario != null) || (this.codUsuario != null && !this.codUsuario.equals(other.codUsuario))) {
             return false;
         }
         return true;
@@ -174,7 +175,7 @@ public class Roles implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.ec.infinity.Roles[ codRol=" + codRol + " ]";
+        return "edu.ec.infinity.Usuario[ codUsuario=" + codUsuario + " ]";
     }
     
 }

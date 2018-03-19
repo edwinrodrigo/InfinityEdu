@@ -58,10 +58,10 @@ public class OpcionesRoles implements Serializable {
     private Date fechaModificacion;
     @JoinColumn(name = "cod_rol", referencedColumnName = "cod_rol", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Roles roles;
+    private Rol roles;
     @JoinColumn(name = "cod_opcion", referencedColumnName = "cod_opcion", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Opciones opciones;
+    private Opcion opciones;
 
     public OpcionesRoles() {
     }
@@ -122,19 +122,19 @@ public class OpcionesRoles implements Serializable {
         this.fechaModificacion = fechaModificacion;
     }
 
-    public Roles getRoles() {
+    public Rol getRoles() {
         return roles;
     }
 
-    public void setRoles(Roles roles) {
+    public void setRoles(Rol roles) {
         this.roles = roles;
     }
 
-    public Opciones getOpciones() {
+    public Opcion getOpciones() {
         return opciones;
     }
 
-    public void setOpciones(Opciones opciones) {
+    public void setOpciones(Opcion opciones) {
         this.opciones = opciones;
     }
 

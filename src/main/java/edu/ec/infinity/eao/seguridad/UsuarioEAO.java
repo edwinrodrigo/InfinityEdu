@@ -5,7 +5,7 @@
  */
 package edu.ec.infinity.eao.seguridad;
 
-import edu.ec.infinity.dominio.seguridad.Usuarios;
+import edu.ec.infinity.dominio.seguridad.Usuario;
 import edu.ec.infinity.eao.generic.GenericDAOAbstract;
 import javax.ejb.Stateless;
 
@@ -14,6 +14,10 @@ import javax.ejb.Stateless;
  * @author Edwin
  */
 @Stateless
-public class UsuarioEAO extends GenericDAOAbstract<Usuarios, Long> implements IUsuarioEAO{
-    
+public class UsuarioEAO extends GenericDAOAbstract<Usuario, Long> implements IUsuarioEAO{
+ 
+	public UsuarioEAO() {
+		super(Usuario.class);
+	}
+	
 }

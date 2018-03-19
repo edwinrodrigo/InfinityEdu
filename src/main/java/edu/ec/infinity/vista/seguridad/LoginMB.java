@@ -5,20 +5,34 @@
  */
 package edu.ec.infinity.vista.seguridad;
 
+import java.io.Serializable;
+
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpSession;
+
+import edu.ec.infinity.bo.seguridad.ServicioAutenticacion;
+import edu.ec.infinity.dominio.seguridad.Usuario;
+import edu.ec.infinity.vista.configuracion.ConstantsAplication;
 
 /**
  *
- * @author Edwin
+ * @author Edwin Amaguaya
+ * @date   01/03/2018
  */
 
 @ManagedBean
-public class LoginMB {
+public class LoginMB implements Serializable{
  
-     private String username;
+	private static final long serialVersionUID = 8681168264807484623L;
+
+	@EJB
+	private ServicioAutenticacion servicioAutenticacion;
+	
+    private String username;
      
     private String password;
  
@@ -37,40 +51,29 @@ public class LoginMB {
     public void setPassword(String password) {
         this.password = password;
     }
-   
-    public void login(ActionEvent event) {
-    	FacesContext context = FacesContext.getCurrentInstance();
-        FacesMessage message = null;
-        boolean loggedIn = false;
-        System.out.println(this.username+"-"+this.password);
-        if(username != null && username.equals("admin") && password != null && password.equals("admin")) {
-            loggedIn = true;
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", username);
-            context.addMessage(null, message);
-            context.getExternalContext().getFlash().setKeepMessages(true);
-        } else {
-            loggedIn = false;
-            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Invalid credentials");
-            context.addMessage(null, message);
-        }
-        
-    }   
     
     public String doLogin() {
-        
-        
-        FacesMessage message = null;
+    	FacesContext context = FacesContext.getCurrentInstance();
+    	FacesMessage message = null;
         boolean loggedIn = false;
-        System.out.println(this.username+"-"+this.password);
-        if(username != null && username.equals("admin") && password != null && password.equals("admin")) {
+        Usuario user = servicioAutenticacion.autenticar(username, password);
+//        if(username != null && username.equals("admin") && password != null && password.equals("admin")) {
+        if(user != null) {
             loggedIn = true;
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", username);
         } else {
             loggedIn = false;
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Invalid credentials");
         }
-        
-        FacesContext.getCurrentInstance().addMessage(null, message);
-         return loggedIn ? "home.jsf?faces-redirect=true":null;
+        context.getExternalContext().getSessionMap().put("usuario", user);
+        context.addMessage(null, message);
+        return loggedIn ? ConstantsAplication.PAGINA_HOME :null;
     }   
+    
+    public String doLogout() {
+        ExternalContext ectx = FacesContext.getCurrentInstance().getExternalContext();
+        HttpSession session = (HttpSession)ectx.getSession(false);
+        session.invalidate();
+        return ConstantsAplication.PAGINA_LOGIN;
+    }
 }
