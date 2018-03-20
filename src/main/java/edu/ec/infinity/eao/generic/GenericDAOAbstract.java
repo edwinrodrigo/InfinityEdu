@@ -223,13 +223,6 @@ public abstract class GenericDAOAbstract<T, PK extends Serializable> implements
 		return criteria.list();
 	}
 
-	/**
-	 * Realiza una consulta armando la select Dinamicamente.
-	 * @author Lenin Boada
-	 * @param pSql String que contiene la  select sin where 
-	 * @param pparams HashMap con los nombres de los campos y sus valores que formaran la WHERE
-	 */	
-	
 	public List nativeQueryAdvanced(StringBuffer pSql, HashMap pparams,
 			String sqlMapping, int startFrom, int length) {
 		Query query = null;
