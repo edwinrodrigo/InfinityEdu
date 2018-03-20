@@ -180,14 +180,6 @@ public abstract class GenericDAOAbstract<T, PK extends Serializable> implements
 		return criteria.list();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.casabaca.inventario.ejb.generic.GenericDAO#findPageByCriteria(int,
-	 * int, org.hibernate.criterion.Order[],
-	 * org.hibernate.criterion.Criterion[])
-	 */
 	public List<T> findPageByCriteria(int firstResult, int maxResults,
 			Order[] orderList, Criterion... criterions) {
 		SessionImpl session = (SessionImpl) em.getDelegate();
