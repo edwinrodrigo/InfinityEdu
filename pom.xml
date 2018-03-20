@@ -76,7 +76,7 @@
         
         <!-- TEMA - INFINITY -->
         <dependency>
-            <groupId>org.theme.</groupId>
+            <groupId>org.theme</groupId>
             <artifactId>paradise-theme</artifactId>
             <version>1.0.2</version>
         </dependency>

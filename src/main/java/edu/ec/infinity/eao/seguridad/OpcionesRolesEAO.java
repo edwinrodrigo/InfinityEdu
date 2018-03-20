@@ -15,14 +15,7 @@ import edu.ec.infinity.eao.generic.GenericDAOAbstract;
 public class OpcionesRolesEAO extends GenericDAOAbstract<OpcionesRoles, OpcionesRolesPK> implements IOpcionesRolesEAO{
 
 	@SuppressWarnings("unchecked")
-	public List<Opcion> findOpcionesBy(Usuario usuario){
-		
-//		SELECT * 
-//		  FROM segrolesusuarios ru,
-//		   	   segopcionesroles opr,
-//		       segusuarios u
-//		 WHERE ru.cod_rol = opr.cod_rol
-//		   AND u.usuario = 'eamaguaya';
+	public List<Opcion> findOpcionesBy(Usuario usuario){	
 		
 		Query query = em.createQuery("SELECT opr.opciones "
 									+ " FROM OpcionesRoles opr, "

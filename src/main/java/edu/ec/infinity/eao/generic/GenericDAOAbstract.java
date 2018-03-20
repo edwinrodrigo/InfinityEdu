@@ -41,8 +41,6 @@ import org.hibernate.internal.SessionImpl;
 public abstract class GenericDAOAbstract<T, PK extends Serializable> implements
 		GenericDAO<T, PK> {
 
-	//@PersistenceContext(unitName = "usados-ejbPU")
-	//@Resource(mappedName = "java:/datasources/CasabacaDS")
 	@PersistenceContext(unitName = "infinityPU")
 	protected EntityManager em;
 	
