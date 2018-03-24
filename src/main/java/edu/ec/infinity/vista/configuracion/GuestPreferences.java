@@ -16,63 +16,65 @@
 package edu.ec.infinity.vista.configuracion;
 
 import java.io.Serializable;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 @ManagedBean
 @SessionScoped
 public class GuestPreferences implements Serializable {
-        
-    private String theme = "blue";
-    
-    private String layout = "default";
-            
-    private boolean overlayMenu = false;
-    
-    private boolean slimMenu = false;
-    
-    private boolean darkMenu = false;
-                
-    public String getTheme() {		
-            return theme;
-    }
-    
-    public String getLayout() {		
-        return layout;
-    }
-    
-    public void setTheme(String theme) {
-            this.theme = theme;
-    }
-    
-    public void setLayout(String layout) {
+
+	private static final long serialVersionUID = 2850761261014620531L;
+
+	private String theme = "blue";
+
+	private String layout = "default";
+
+	private boolean overlayMenu = false;
+
+	private boolean slimMenu = false;
+
+	private boolean darkMenu = false;
+
+	public String getTheme() {
+		return theme;
+	}
+
+	public String getLayout() {
+		return layout;
+	}
+
+	public void setTheme(String theme) {
+		this.theme = theme;
+	}
+
+	public void setLayout(String layout) {
 		this.layout = layout;
-    }
-        
-    public boolean isOverlayMenu() {
-        return this.overlayMenu;
-    }
-    
-    public void setOverlayMenu(boolean value) {
-        this.overlayMenu = value;
-        this.slimMenu = false;
-    }
-    
-    public boolean isSlimMenu() {
-        return this.slimMenu;
-    }
-    
-    public void setSlimMenu(boolean value) {
-        this.slimMenu = value;
-    }
-    
-    public boolean isDarkMenu() {
-        return this.darkMenu;
-    }
-    
-    public void setDarkMenu(boolean value) {
-        this.darkMenu = value;
-    }
-    
+	}
+
+	public boolean isOverlayMenu() {
+		return this.overlayMenu;
+	}
+
+	public void setOverlayMenu(boolean value) {
+		this.overlayMenu = value;
+		this.slimMenu = false;
+	}
+
+	public boolean isSlimMenu() {
+		return this.slimMenu;
+	}
+
+	public void setSlimMenu(boolean value) {
+		this.slimMenu = value;
+	}
+
+	public boolean isDarkMenu() {
+		return this.darkMenu;
+	}
+
+	public void setDarkMenu(boolean value) {
+		this.darkMenu = value;
+	}
 
 }
