@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.ec.infinity.dominio.seguridad.Usuario;
-import edu.ec.infinity.vista.configuracion.ConstantsAplication;
+import edu.ec.infinity.util.constantes.IRutas;
 
 
 @WebFilter( dispatcherTypes = { DispatcherType.ERROR, DispatcherType.REQUEST },
@@ -36,7 +36,7 @@ public class FiltroAplicacion implements Filter{
 			userLogged = (Usuario) req.getSession(false).getAttribute("usuario");
 		}
 		if(userLogged==null) {
-			res.sendRedirect(req.getContextPath() + ConstantsAplication.PAGINA_REDIRECCION_FILTRO);
+			res.sendRedirect(req.getContextPath() + IRutas.PAGINA_REDIRECCION_FILTRO);
 		}else {
 			chain.doFilter(request, response);
 		}

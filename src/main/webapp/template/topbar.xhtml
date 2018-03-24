@@ -5,7 +5,7 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui"
     xmlns:pa="http://primefaces.org/paradise">
-
+	
 	<h:form>
 	    <div class="topbar">
 	        <h:link outcome="/dashboard" styleClass="topbar-logo">
@@ -17,7 +17,7 @@
 	        </a>
 	        
 	        <a href="#" id="user-display">
-	            <span class="username">Emma Davis</span>
+	            <span class="username">#{loginMB.getParameterSession("usuario").usuario}</span>
 	            <p:graphicImage name="images/avatar.png" library="paradise-layout" style="border: 0px;"/>
 	            <i class="fa fa-angle-down"></i>
 	        </a>

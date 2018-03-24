@@ -5,246 +5,141 @@
  */
 package edu.ec.infinity.dominio.seguridad;
 
-import java.io.Serializable;
-import java.util.Date;
+import java.math.BigDecimal;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
-/**
- * @author danielPC
- */
+import org.hibernate.annotations.Check;
+import org.hibernate.annotations.Type;
+
+import edu.ec.infinity.util.constantes.ICamposTablas;
+import edu.ec.infinity.util.constantes.IEsquemas;
+import edu.ec.infinity.util.constantes.ITablas;
+
 @Entity
-@Table(name = "segOpciones")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Opciones.findAll", query = "SELECT o FROM Opcion o"),
-    @NamedQuery(name = "Opciones.findByCodOpcion", query = "SELECT o FROM Opcion o WHERE o.codOpcion = :codOpcion"),
-    @NamedQuery(name = "Opciones.findByNombre", query = "SELECT o FROM Opcion o WHERE o.nombre = :nombre"),
-    @NamedQuery(name = "Opciones.findByDescripcion", query = "SELECT o FROM Opcion o WHERE o.descripcion = :descripcion"),
-    @NamedQuery(name = "Opciones.findByIcono", query = "SELECT o FROM Opcion o WHERE o.icono = :icono"),
-    @NamedQuery(name = "Opciones.findByUrl", query = "SELECT o FROM Opcion o WHERE o.url = :url"),
-    @NamedQuery(name = "Opciones.findByAccion", query = "SELECT o FROM Opcion o WHERE o.accion = :accion"),
-    @NamedQuery(name = "Opciones.findByOrden", query = "SELECT o FROM Opcion o WHERE o.orden = :orden"),
-    @NamedQuery(name = "Opciones.findByOpcionPadre", query = "SELECT o FROM Opcion o WHERE o.opcionPadre = :opcionPadre"),
-    @NamedQuery(name = "Opciones.findByEstado", query = "SELECT o FROM Opcion o WHERE o.estado = :estado"),
-    @NamedQuery(name = "Opciones.findByUsuarioIngreso", query = "SELECT o FROM Opcion o WHERE o.usuarioIngreso = :usuarioIngreso"),
-    @NamedQuery(name = "Opciones.findByFechaIngreso", query = "SELECT o FROM Opcion o WHERE o.fechaIngreso = :fechaIngreso"),
-    @NamedQuery(name = "Opciones.findByUsuarioModificacion", query = "SELECT o FROM Opcion o WHERE o.usuarioModificacion = :usuarioModificacion"),
-    @NamedQuery(name = "Opciones.findByFechaModificacion", query = "SELECT o FROM Opcion o WHERE o.fechaModificacion = :fechaModificacion"),
-    @NamedQuery(name = "Opciones.findByModulo", query = "SELECT o FROM Opcion o WHERE o.modulo = :modulo")})
-public class Opcion implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "cod_opcion")
-    private Long codOpcion;
-    @Size(max = 100)
-    @Column(name = "nombre")
-    private String nombre;
-    @Size(max = 100)
-    @Column(name = "descripcion")
-    private String descripcion;
-    @Size(max = 100)
-    @Column(name = "icono")
-    private String icono;
-    @Size(max = 100)
-    @Column(name = "url")
-    private String url;
-    @Size(max = 30)
-    @Column(name = "accion")
-    private String accion;
-    @Column(name = "orden")
-    private Integer orden;
-    @Column(name = "opcion_padre")
-    private Integer opcionPadre;
-    @Size(max = 1)
-    @Column(name = "estado")
-    private String estado;
-    @Size(max = 10)
-    @Column(name = "usuario_ingreso")
-    private String usuarioIngreso;
-    @Column(name = "fecha_ingreso")
-    @Temporal(TemporalType.DATE)
-    private Date fechaIngreso;
-    @Size(max = 10)
-    @Column(name = "usuario_modificacion")
-    private String usuarioModificacion;
-    @Column(name = "fecha_modificacion")
-    @Temporal(TemporalType.DATE)
-    private Date fechaModificacion;
-    @Size(max = 1)
-    @Column(name = "modulo")
-    private String modulo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "opciones", fetch = FetchType.EAGER)
-    private List<OpcionesRoles> opcionesRolesList;
+@Table(name = ITablas.OPCION, schema = IEsquemas.SEGURIDAD)
+public class Opcion extends SeguridadGeneric<Opcion> {
 
-    public Opcion() {
-    }
+	private static final long serialVersionUID = -4320734775653184545L;
 
-    public Opcion(Long codOpcion) {
-        this.codOpcion = codOpcion;
-    }
+	@Id
+	private Long id;
 
-    public Long getCodOpcion() {
-        return codOpcion;
-    }
+	@Size(max = 100)
+	private String nombre;
 
-    public void setCodOpcion(Long codOpcion) {
-        this.codOpcion = codOpcion;
-    }
+	@Size(max = 200)
+	private String descripcion;
 
-    public String getNombre() {
-        return nombre;
-    }
+	@Size(max = 20)
+	private String icono;
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+	@Size(max = 200)
+	private String url;
 
-    public String getDescripcion() {
-        return descripcion;
-    }
+	private BigDecimal orden;
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
+	@JoinColumn(name = ICamposTablas.PADRE_ID)
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Opcion padre;
 
-    public String getIcono() {
-        return icono;
-    }
+	@Size(max = 1)
+	@Check(constraints = ICamposTablas.ESTADOAI_CHECK)
+	@Type(type = EstadoAI.TYPE)
+	private EstadoAI estado;
 
-    public void setIcono(String icono) {
-        this.icono = icono;
-    }
+	@OneToMany(mappedBy = ICamposTablas.PADRE, fetch = FetchType.LAZY)
+	private List<Opcion> opcionList;
+	
+	@OneToMany(mappedBy = ICamposTablas.OPCION, fetch = FetchType.LAZY)
+	private List<OpcionRol> opcionRolList;
 
-    public String getUrl() {
-        return url;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getAccion() {
-        return accion;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public void setAccion(String accion) {
-        this.accion = accion;
-    }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    public Integer getOrden() {
-        return orden;
-    }
+	public String getDescripcion() {
+		return descripcion;
+	}
 
-    public void setOrden(Integer orden) {
-        this.orden = orden;
-    }
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 
-    public Integer getOpcionPadre() {
-        return opcionPadre;
-    }
+	public String getIcono() {
+		return icono;
+	}
 
-    public void setOpcionPadre(Integer opcionPadre) {
-        this.opcionPadre = opcionPadre;
-    }
+	public void setIcono(String icono) {
+		this.icono = icono;
+	}
 
-    public String getEstado() {
-        return estado;
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    public String getUsuarioIngreso() {
-        return usuarioIngreso;
-    }
+	public BigDecimal getOrden() {
+		return orden;
+	}
 
-    public void setUsuarioIngreso(String usuarioIngreso) {
-        this.usuarioIngreso = usuarioIngreso;
-    }
+	public void setOrden(BigDecimal orden) {
+		this.orden = orden;
+	}
 
-    public Date getFechaIngreso() {
-        return fechaIngreso;
-    }
+	public Opcion getPadre() {
+		return padre;
+	}
 
-    public void setFechaIngreso(Date fechaIngreso) {
-        this.fechaIngreso = fechaIngreso;
-    }
+	public void setPadre(Opcion padre) {
+		this.padre = padre;
+	}
 
-    public String getUsuarioModificacion() {
-        return usuarioModificacion;
-    }
+	public EstadoAI getEstado() {
+		return estado;
+	}
 
-    public void setUsuarioModificacion(String usuarioModificacion) {
-        this.usuarioModificacion = usuarioModificacion;
-    }
+	public void setEstado(EstadoAI estado) {
+		this.estado = estado;
+	}
 
-    public Date getFechaModificacion() {
-        return fechaModificacion;
-    }
+	public List<Opcion> getOpcionList() {
+		return opcionList;
+	}
 
-    public void setFechaModificacion(Date fechaModificacion) {
-        this.fechaModificacion = fechaModificacion;
-    }
+	public void setOpcionList(List<Opcion> opcionList) {
+		this.opcionList = opcionList;
+	}
 
-    public String getModulo() {
-        return modulo;
-    }
+	public List<OpcionRol> getOpcionRolList() {
+		return opcionRolList;
+	}
 
-    public void setModulo(String modulo) {
-        this.modulo = modulo;
-    }
+	public void setOpcionRolList(List<OpcionRol> opcionRolList) {
+		this.opcionRolList = opcionRolList;
+	}
 
-    @XmlTransient
-    public List<OpcionesRoles> getOpcionesRolesList() {
-        return opcionesRolesList;
-    }
-
-    public void setOpcionesRolesList(List<OpcionesRoles> opcionesRolesList) {
-        this.opcionesRolesList = opcionesRolesList;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (codOpcion != null ? codOpcion.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Opcion)) {
-            return false;
-        }
-        Opcion other = (Opcion) object;
-        if ((this.codOpcion == null && other.codOpcion != null) || (this.codOpcion != null && !this.codOpcion.equals(other.codOpcion))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "edu.ec.infinity.Opciones[ codOpcion=" + codOpcion + " ]";
-    }
-    
 }

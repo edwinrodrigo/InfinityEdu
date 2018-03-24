@@ -1,180 +1,109 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.ec.infinity.dominio.seguridad;
 
-import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author danielPC
- */
+import org.hibernate.annotations.Check;
+import org.hibernate.annotations.Type;
+
+import edu.ec.infinity.dominio.general.Empresa;
+import edu.ec.infinity.util.constantes.ICamposTablas;
+import edu.ec.infinity.util.constantes.IEsquemas;
+import edu.ec.infinity.util.constantes.ITablas;
+
 @Entity
-@Table(name = "segRoles")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Roles.findAll", query = "SELECT r FROM Rol r"),
-    @NamedQuery(name = "Roles.findByCodRol", query = "SELECT r FROM Rol r WHERE r.codRol = :codRol"),
-    @NamedQuery(name = "Roles.findByNombre", query = "SELECT r FROM Rol r WHERE r.nombre = :nombre"),
-    @NamedQuery(name = "Roles.findByEstado", query = "SELECT r FROM Rol r WHERE r.estado = :estado"),
-    @NamedQuery(name = "Roles.findByUsuarioIngreso", query = "SELECT r FROM Rol r WHERE r.usuarioIngreso = :usuarioIngreso"),
-    @NamedQuery(name = "Roles.findByFechaIngreso", query = "SELECT r FROM Rol r WHERE r.fechaIngreso = :fechaIngreso"),
-    @NamedQuery(name = "Roles.findByUsuarioModificacion", query = "SELECT r FROM Rol r WHERE r.usuarioModificacion = :usuarioModificacion"),
-    @NamedQuery(name = "Roles.findByFechaModificacion", query = "SELECT r FROM Rol r WHERE r.fechaModificacion = :fechaModificacion")})
-public class Rol implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "cod_rol")
-    private Long codRol;
-    @Size(max = 50)
-    @Column(name = "nombre")
-    private String nombre;
-    @Size(max = 1)
-    @Column(name = "estado")
-    private String estado;
-    @Size(max = 10)
-    @Column(name = "usuario_ingreso")
-    private String usuarioIngreso;
-    @Column(name = "fecha_ingreso")
-    @Temporal(TemporalType.DATE)
-    private Date fechaIngreso;
-    @Size(max = 10)
-    @Column(name = "usuario_modificacion")
-    private String usuarioModificacion;
-    @Column(name = "fecha_modificacion")
-    @Temporal(TemporalType.DATE)
-    private Date fechaModificacion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roles", fetch = FetchType.EAGER)
-    private List<OpcionesRoles> opcionesRolesList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roles", fetch = FetchType.EAGER)
-    private List<RolesUsuarios> rolesUsuariosList;
+@Table(name = ITablas.ROL, schema = IEsquemas.SEGURIDAD)
+public class Rol extends SeguridadGeneric<Rol> {
 
-    public Rol() {
-    }
+	private static final long serialVersionUID = 6830349103511548397L;
 
-    public Rol(Long codRol) {
-        this.codRol = codRol;
-    }
+	@Id
+	private Long id;
 
-    public Long getCodRol() {
-        return codRol;
-    }
+	@Size(max = 100)
+	private String nombre;
 
-    public void setCodRol(Long codRol) {
-        this.codRol = codRol;
-    }
+	@Size(max = 1)
+	@Check(constraints = ICamposTablas.ESTADOAI_CHECK)
+	@Type(type = EstadoAI.TYPE)
+	private EstadoAI estado;
 
-    public String getNombre() {
-        return nombre;
-    }
+	@Column(name = ICamposTablas.EMPRESA_ID)
+	private Long empresaId;
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+	@JoinColumn(name = ICamposTablas.EMPRESA_ID, referencedColumnName = ICamposTablas.ID, insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Empresa empresa;
 
-    public String getEstado() {
-        return estado;
-    }
+	@OneToMany(mappedBy = ICamposTablas.ROL, fetch = FetchType.LAZY)
+	private List<OpcionRol> opcionRolList;
 
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
+	@OneToMany(mappedBy = ICamposTablas.ROL, fetch = FetchType.LAZY)
+	private List<UsuarioRol> usuarioRolList;
 
-    public String getUsuarioIngreso() {
-        return usuarioIngreso;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setUsuarioIngreso(String usuarioIngreso) {
-        this.usuarioIngreso = usuarioIngreso;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Date getFechaIngreso() {
-        return fechaIngreso;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public void setFechaIngreso(Date fechaIngreso) {
-        this.fechaIngreso = fechaIngreso;
-    }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    public String getUsuarioModificacion() {
-        return usuarioModificacion;
-    }
+	public EstadoAI getEstado() {
+		return estado;
+	}
 
-    public void setUsuarioModificacion(String usuarioModificacion) {
-        this.usuarioModificacion = usuarioModificacion;
-    }
+	public void setEstado(EstadoAI estado) {
+		this.estado = estado;
+	}
 
-    public Date getFechaModificacion() {
-        return fechaModificacion;
-    }
+	public Long getEmpresaId() {
+		return empresaId;
+	}
 
-    public void setFechaModificacion(Date fechaModificacion) {
-        this.fechaModificacion = fechaModificacion;
-    }
+	public void setEmpresaId(Long empresaId) {
+		this.empresaId = empresaId;
+	}
 
-    @XmlTransient
-    public List<OpcionesRoles> getOpcionesRolesList() {
-        return opcionesRolesList;
-    }
+	public Empresa getEmpresa() {
+		return empresa;
+	}
 
-    public void setOpcionesRolesList(List<OpcionesRoles> opcionesRolesList) {
-        this.opcionesRolesList = opcionesRolesList;
-    }
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
 
-    @XmlTransient
-    public List<RolesUsuarios> getRolesUsuariosList() {
-        return rolesUsuariosList;
-    }
+	public List<OpcionRol> getOpcionRolList() {
+		return opcionRolList;
+	}
 
-    public void setRolesUsuariosList(List<RolesUsuarios> rolesUsuariosList) {
-        this.rolesUsuariosList = rolesUsuariosList;
-    }
+	public void setOpcionRolList(List<OpcionRol> opcionRolList) {
+		this.opcionRolList = opcionRolList;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (codRol != null ? codRol.hashCode() : 0);
-        return hash;
-    }
+	public List<UsuarioRol> getUsuarioRolList() {
+		return usuarioRolList;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Rol)) {
-            return false;
-        }
-        Rol other = (Rol) object;
-        if ((this.codRol == null && other.codRol != null) || (this.codRol != null && !this.codRol.equals(other.codRol))) {
-            return false;
-        }
-        return true;
-    }
+	public void setUsuarioRolList(List<UsuarioRol> usuarioRolList) {
+		this.usuarioRolList = usuarioRolList;
+	}
 
-    @Override
-    public String toString() {
-        return "edu.ec.infinity.Roles[ codRol=" + codRol + " ]";
-    }
-    
 }
