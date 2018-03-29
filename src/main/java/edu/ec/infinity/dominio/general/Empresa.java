@@ -215,5 +215,7 @@ public class Empresa extends GeneralGeneric<Empresa> {
 	public void setEmpresaList(List<Empresa> empresaList) {
 		this.empresaList = empresaList;
 	}
+	
+	
 
 }
