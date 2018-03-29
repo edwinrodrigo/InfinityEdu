@@ -9,7 +9,7 @@
 	<h:form>
 	    <div class="topbar">
 	        <h:link outcome="/dashboard" styleClass="topbar-logo">
-	            <p:graphicImage name="images/#{guestPreferences.layout == 'default' ? 'logo.png' : 'logo.png'}" style="border: 0px;" library="paradise-layout" />
+	            <p:graphicImage name="images/#{guestPreferences.layout == 'default' ? 'logo-infinity-completo.png' : 'logo-infinity-completo.png'}" style="border: 0px;" library="paradise-layout" />
 	        </h:link>
 	        
 	        <a href="#" id="menu-button">
@@ -17,8 +17,8 @@
 	        </a>
 	        
 	        <a href="#" id="user-display">
-	            <span class="username">#{loginMB.getParameterSession("usuario").usuario}</span>
-	            <p:graphicImage name="images/avatar.png" library="paradise-layout" style="border: 0px;"/>
+	            <span class="username">#{topBarMB.usuario.persona.nombrePila}</span>
+	            <p:graphicImage name="images/#{topBarMB.usuario.persona.sexo == 'M' ? 'avatarM.png' : 'avatarF.png'}" library="paradise-layout" style="border: 0px;"/>
 	            <i class="fa fa-angle-down"></i>
 	        </a>
 	        
