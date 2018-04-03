@@ -20,5 +20,9 @@ public interface ICamposTablas {
 	public static final String ORDEN="orden";
 	public static final String OPCIONROLLIST="opcionRolList";
 	public static final String USUARIOROLLIST="usuarioRolList";
+	public static final String PERSONA = "persona";
+	public static final String PERSONA_ID = "persona_id";
+//	public static final String SEXO_CHECK="SEXO IN ('M','F')";
+	public static final String NIVEL = "nivel";
 	
 }

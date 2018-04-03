@@ -2,6 +2,7 @@ package edu.ec.infinity.vista.seguridad;
 
 import java.io.Serializable;
 
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
@@ -9,8 +10,8 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import edu.ec.infinity.dominio.seguridad.Usuario;
+import edu.ec.infinity.servicio.general.IServicioAutenticacion;
 import edu.ec.infinity.util.constantes.IRutas;
-import edu.ec.infinity.vista.generic.GenericMB;
 
 /**
  *
@@ -19,9 +20,12 @@ import edu.ec.infinity.vista.generic.GenericMB;
  */
 
 @ManagedBean
-public class LoginMB extends GenericMB implements Serializable {
+public class LoginMB implements Serializable {
 
 	private static final long serialVersionUID = 8681168264807484623L;
+
+	@EJB
+	protected IServicioAutenticacion servicioAutenticacion;
 
 	private String username;
 	private String password;
@@ -43,7 +47,7 @@ public class LoginMB extends GenericMB implements Serializable {
 	}
 
 	public String doLogin() {
-		FacesContext context = getContext();
+		FacesContext context = FacesContext.getCurrentInstance();
 		FacesMessage message = null;
 		boolean loggedIn = false;
 		Usuario user = servicioAutenticacion.autenticar(username, password);

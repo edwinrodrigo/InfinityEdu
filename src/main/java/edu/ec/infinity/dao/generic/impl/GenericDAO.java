@@ -23,7 +23,8 @@ import edu.ec.infinity.dao.generic.IGenericDAO;
 import edu.ec.infinity.util.DAOUtils;
 import edu.ec.infinity.util.constantes.ICamposTablas;
 
-public abstract class GenericDAO<T, PK extends Serializable> extends DAOUtils implements IGenericDAO<T, PK>, ICamposTablas {
+public abstract class GenericDAO<T, PK extends Serializable> extends DAOUtils
+		implements IGenericDAO<T, PK>, ICamposTablas {
 
 	@PersistenceContext(unitName = "infinityPU")
 	protected EntityManager em;
@@ -116,6 +117,15 @@ public abstract class GenericDAO<T, PK extends Serializable> extends DAOUtils im
 
 	public List<T> findByCriteria(final DetachedCriteria criteria) {
 		return findByCriteria(criteria, -1, -1);
+	}
+
+	public T findFirstByCriteria(final DetachedCriteria criteria) {
+		List<T> list = findByCriteria(criteria);
+		if (list == null || list.isEmpty() || list.size() != 1) {
+			return null;
+		} else {
+			return list.get(0);
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -253,7 +263,8 @@ public abstract class GenericDAO<T, PK extends Serializable> extends DAOUtils im
 	// }
 
 	@SuppressWarnings("unchecked")
-	public List<T> nativeQueryAdvanced(StringBuffer pSql, HashMap<?,?> pparams, String sqlMapping, int startFrom, int length) {
+	public List<T> nativeQueryAdvanced(StringBuffer pSql, HashMap<?, ?> pparams, String sqlMapping, int startFrom,
+			int length) {
 		Query query = null;
 		List<T> results = null;
 		String[] paramNamesFind = null;
@@ -315,7 +326,7 @@ public abstract class GenericDAO<T, PK extends Serializable> extends DAOUtils im
 	 *            HashMap con los nombres de los campos y sus valores que formaran
 	 *            la WHERE
 	 */
-	public int nativeSentenceAdvanced(StringBuffer pSql, HashMap<?,?> pparams) {
+	public int nativeSentenceAdvanced(StringBuffer pSql, HashMap<?, ?> pparams) {
 		Query query = null;
 		int results = 0;
 		String[] paramNamesFind = null;
@@ -369,7 +380,7 @@ public abstract class GenericDAO<T, PK extends Serializable> extends DAOUtils im
 	 *            consulta.
 	 */
 	@SuppressWarnings("unchecked")
-	public List<T> findObjectsAdvanced(StringBuffer pSql, HashMap<?,?> pparams, int startFrom, int length) {
+	public List<T> findObjectsAdvanced(StringBuffer pSql, HashMap<?, ?> pparams, int startFrom, int length) {
 		List<T> results = null;
 		String[] paramNamesFind = null;
 		Object[] valuesFind = null;

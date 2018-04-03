@@ -36,7 +36,7 @@ public class FiltroAplicacion implements Filter{
 			userLogged = (Usuario) req.getSession(false).getAttribute("usuario");
 		}
 		if(userLogged==null) {
-			res.sendRedirect(req.getContextPath() + IRutas.PAGINA_REDIRECCION_FILTRO);
+			res.sendRedirect(req.getContextPath() + IRutas.PAGINA_SESION_EXPIRADA);
 		}else {
 			chain.doFilter(request, response);
 		}

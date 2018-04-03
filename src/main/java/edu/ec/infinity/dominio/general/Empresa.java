@@ -1,15 +1,19 @@
 package edu.ec.infinity.dominio.general;
 
+import java.io.File;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Check;
@@ -26,6 +30,7 @@ public class Empresa extends GeneralGeneric<Empresa> {
 	private static final long serialVersionUID = -8852352468261507963L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Size(max = 20)
@@ -68,17 +73,43 @@ public class Empresa extends GeneralGeneric<Empresa> {
 	@Size(max = 100)
 	private String ubicacion;
 
-	@Size(max = 1)
+	@Size(max = 300)
+	private String urlLogo;
+
 	@Check(constraints = ICamposTablas.ESTADOAI_CHECK)
 	@Type(type = EstadoAI.TYPE)
 	private EstadoAI estado;
 
 	@JoinColumn(name = ICamposTablas.CIUDAD_ID, referencedColumnName = ICamposTablas.ID, insertable = false, updatable = false)
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private DivisionGeopolitica ciudad;
 
 	@OneToMany(mappedBy = ICamposTablas.PADRE, fetch = FetchType.LAZY)
 	private List<Empresa> empresaList;
+
+	@Transient
+	private byte[] logo;
+	
+	@Transient
+	private String urlLogoCompleto;
+	
+	@Transient
+	private String logoContentType;
+	
+	@Transient
+	private String logoFileName;
+	
+	@Transient
+	private String latitud;
+	
+	@Transient
+	private String longitud;
+	
+	@Transient
+	private DivisionGeopolitica pais;
+	
+	@Transient
+	private DivisionGeopolitica provincia;
 
 	public Long getId() {
 		return id;
@@ -192,6 +223,14 @@ public class Empresa extends GeneralGeneric<Empresa> {
 		this.ubicacion = ubicacion;
 	}
 
+	public String getUrlLogo() {
+		return urlLogo;
+	}
+
+	public void setUrlLogo(String urlLogo) {
+		this.urlLogo = urlLogo;
+	}
+
 	public EstadoAI getEstado() {
 		return estado;
 	}
@@ -215,7 +254,103 @@ public class Empresa extends GeneralGeneric<Empresa> {
 	public void setEmpresaList(List<Empresa> empresaList) {
 		this.empresaList = empresaList;
 	}
+
+	public byte[] getLogo() {
+		return logo;
+	}
+
+	public void setLogo(byte[] logo) {
+		this.logo = logo;
+	}
 	
-	
+	public String getUrlLogoCompleto() {
+		String ruta = PATH_EMPRESAS + "//" + getCodigo() + getUrlLogo();
+		File file = new File(ruta);
+		if(file.exists())
+			return ruta;
+		else
+			return PATH_INFINITY+"//logo-company.png";
+	}
+
+	public void setUrlLogoCompleto(String urlLogoCompleto) {
+		this.urlLogoCompleto = urlLogoCompleto;
+	}
+
+	public String getLogoContentType() {
+		return logoContentType;
+	}
+
+	public void setLogoContentType(String logoContentType) {
+		this.logoContentType = logoContentType;
+	}
+
+	public String getLogoFileName() {
+		return logoFileName;
+	}
+
+	public void setLogoFileName(String logoFileName) {
+		this.logoFileName = logoFileName;
+	}
+
+	public String getLatitud() {
+		if(getUbicacion()!=null)
+			return getUbicacion().split(",")[0];
+		return "-2.1681399";
+	}
+
+	public String getLongitud() {
+		if(getUbicacion()!=null)
+			return getUbicacion().split(",")[1];
+		return "-79.9126491";
+	}
+
+	public DivisionGeopolitica getPais() {
+		return pais;
+	}
+
+	public void setPais(DivisionGeopolitica pais) {
+		this.pais = pais;
+	}
+
+	public DivisionGeopolitica getProvincia() {
+		return provincia;
+	}
+
+	public void setProvincia(DivisionGeopolitica provincia) {
+		this.provincia = provincia;
+	}
+
+	public Empresa() {
+		super();
+	}
+
+	public Empresa(Empresa empresa) {
+		this.id = empresa.getId();
+		this.codigo = empresa.getCodigo();
+		this.nombre = empresa.getNombre();
+		this.ciudadId = empresa.getCiudadId();
+		this.padre = empresa.getPadre();
+		this.rector = empresa.getRector();
+		this.profesionRector = empresa.getProfesionRector();
+		this.vicerrector = empresa.getVicerrector();
+		this.profesionVicerrector = empresa.getProfesionVicerrector();
+		this.secretario = empresa.getSecretario();
+		this.profesionSecretario = empresa.getProfesionSecretario();
+		this.representanteLegal = empresa.getRepresentanteLegal();
+		this.profesionRepresentanteLegal = empresa.getProfesionRepresentanteLegal();
+		this.ubicacion = empresa.getUbicacion();
+		this.urlLogo = empresa.getUrlLogo();
+		this.estado = empresa.getEstado();
+		this.ciudad = empresa.getCiudad();
+		this.empresaList = empresa.getEmpresaList();
+		this.logo = empresa.getLogo();
+		this.urlLogoCompleto = empresa.getUrlLogoCompleto();
+		this.logoContentType = empresa.getLogoContentType();
+		this.logoFileName = empresa.getLogoFileName();
+		this.latitud = empresa.getLatitud();
+		this.longitud = empresa.getLongitud();
+		this.pais = empresa.getPais();
+		this.provincia = empresa.getProvincia();
+	}
 
 }

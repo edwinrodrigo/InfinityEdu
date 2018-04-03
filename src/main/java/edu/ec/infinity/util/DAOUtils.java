@@ -225,9 +225,17 @@ public class DAOUtils {
 		criteria.add(Restrictions.eq(propertyName, value));
 		return criteria;
 	}
-	
-	public DetachedCriteria addEqualsProperty(DetachedCriteria criteria, String propertyName, String otherPropertyName) {
+
+	public DetachedCriteria addEqualsProperty(DetachedCriteria criteria, String propertyName,
+			String otherPropertyName) {
 		criteria.add(Restrictions.eqProperty(propertyName, otherPropertyName));
+		return criteria;
+	}
+
+	public DetachedCriteria addEqualsIfNotNull(DetachedCriteria criteria, String propertyName, Object value) {
+		if (value != null) {
+			criteria.add(Restrictions.eq(propertyName, value));
+		}
 		return criteria;
 	}
 

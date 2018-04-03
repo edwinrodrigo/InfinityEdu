@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,8 +23,14 @@ import edu.ec.infinity.util.constantes.ITablas;
 public class DivisionGeopolitica extends GeneralGeneric<DivisionGeopolitica> {
 
 	private static final long serialVersionUID = -5901923687029811563L;
+	
+	public static final BigDecimal NIVEL_UNO = new BigDecimal(1);
+	public static final BigDecimal NIVEL_DOS = new BigDecimal(2);
+	public static final BigDecimal NIVEL_TRES = new BigDecimal(3);
+	public static final BigDecimal NIVEL_CUATRO = new BigDecimal(4);
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Size(max = 50)

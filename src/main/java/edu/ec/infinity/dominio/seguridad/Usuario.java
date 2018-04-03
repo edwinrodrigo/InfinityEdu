@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -29,6 +31,7 @@ public class Usuario extends SeguridadGeneric<Usuario> {
 	private static final long serialVersionUID = -7726450263816992046L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Size(max = 100)
@@ -36,9 +39,6 @@ public class Usuario extends SeguridadGeneric<Usuario> {
 
 	@Size(max = 200)
 	private String clave;
-	
-	@Size(max = 300)
-	private String urlAvatar;
 
 	@JoinColumn(name = ICamposTablas.EMPRESA_ID)
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -48,9 +48,9 @@ public class Usuario extends SeguridadGeneric<Usuario> {
 	@Check(constraints = ICamposTablas.ESTADOAI_CHECK)
 	@Type(type = EstadoAI.TYPE)
 	private EstadoAI estado;
-	
-	@OneToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="persona_id")
+
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = PERSONA_ID)
 	private Persona persona;
 
 	@OneToMany(mappedBy = ICamposTablas.USUARIO, fetch = FetchType.LAZY)
@@ -110,13 +110,5 @@ public class Usuario extends SeguridadGeneric<Usuario> {
 
 	public void setUsuarioRolList(List<UsuarioRol> usuarioRolList) {
 		this.usuarioRolList = usuarioRolList;
-	}
-
-	public String getUrlAvatar() {
-		return urlAvatar;
-	}
-
-	public void setUrlAvatar(String urlAvatar) {
-		this.urlAvatar = urlAvatar;
 	}
 }
