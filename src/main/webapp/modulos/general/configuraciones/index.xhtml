@@ -4,15 +4,12 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 template="/template/template.xhtml">
-
-    <ui:define name="title">Dashboard</ui:define>
-
-    <ui:define name="head">
-           <h:outputLabel value="Pagina en Construccion" />
-    </ui:define>
+                
+    <ui:define name="title">Configuraciones</ui:define>
 
     <ui:define name="content">
-    	<h:graphicImage value="/resources/paradise-layout/images/general/estamos-en-obras.jpg" />
+    
+    			<ui:include src="/modulos/general/configuraciones/empresa.xhtml" />
     </ui:define>
 
 </ui:composition>

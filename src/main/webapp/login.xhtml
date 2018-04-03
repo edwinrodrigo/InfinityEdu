@@ -12,7 +12,7 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
             <meta name="apple-mobile-web-app-capable" content="yes" />
         </f:facet>
-        <title>InfityEdu</title>
+        <title>Infity Educativo</title>
     </h:head>
 
     <h:body styleClass="login-body">
@@ -23,36 +23,36 @@
                     <div class="ui-g-12 logo-container">
                         <p:graphicImage name="images/logo-infinity.png" library="paradise-layout" styleClass="logo" />
                         <p:graphicImage name="images/login/icon-login.png" library="paradise-layout" styleClass="login-icon" />
-                        <h2>Welcome to Infity</h2>
+                        <h2>Bienvenido a la plataforma Infity</h2>
                     </div>
                     <div class="ui-g-12">
-                        <p:outputLabel for="username" value="Username" />
+                        <p:outputLabel for="username" value="Usuario" />
                         <div class="input-wrapper">
-                            <p:inputText id="username" placeholder="Username" value="#{loginMB.username}"/>
+                            <p:inputText id="username" placeholder="Usuario" value="#{loginMB.username}"/>
                             <i class="fa fa-user" />
                         </div>
                     </div>
                     <div class="ui-g-12">
-                        <p:outputLabel for="password" value="Password" />
+                        <p:outputLabel for="password" value="Contraseña" />
                         <div class="input-wrapper">
-                            <p:password id="password" placeholder="Password" feedback="false" value="#{loginMB.password}"/>
+                            <p:password id="password" placeholder="Contraseña" feedback="false" value="#{loginMB.password}"/>
                             <i class="fa fa-lock" />
                         </div>
                     </div>
                     <div class="ui-g-12 chkbox-container">
                         <div class="ui-g-6 ui-md-6">
                             <h:outputLink value="#">
-                                Forgot password?
+                                Olvidaste tu contraseña?
                             </h:outputLink>
                         </div>
                         <div class="ui-g-6 rememberme-container">
-                            <p:outputLabel for="remember-me" value="Remember Me"/>
+                            <p:outputLabel for="remember-me" value="Recuérdame"/>
                             <p:selectBooleanCheckbox id="remember-me" />
                         </div>
                         
                     </div>
                     <div class="ui-g-12 button-container">
-                        <p:commandButton value="Sign In" 
+                        <p:commandButton value="Entrar" 
                                          update="growl"
                                          styleClass="blue-btn raised-btn" 
                                          action="#{loginMB.doLogin}"></p:commandButton>

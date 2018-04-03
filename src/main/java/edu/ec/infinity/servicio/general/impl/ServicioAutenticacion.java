@@ -1,13 +1,13 @@
-package edu.ec.infinity.servicio.seguridad;
+package edu.ec.infinity.servicio.general.impl;
 
 import java.util.HashMap;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
 import edu.ec.infinity.dominio.seguridad.Opcion;
 import edu.ec.infinity.dominio.seguridad.Usuario;
+import edu.ec.infinity.servicio.general.IServicioAutenticacion;
 import edu.ec.infinity.servicio.generic.ServicioGeneric;
 
 /**
@@ -17,12 +17,9 @@ import edu.ec.infinity.servicio.generic.ServicioGeneric;
  * 
  */
 @Stateless
-public class ServicioAutenticacion extends ServicioGeneric {
+public class ServicioAutenticacion extends ServicioGeneric implements IServicioAutenticacion {
 
-	@PostConstruct
-	public void init() {
-
-	}
+	private static final long serialVersionUID = -3740843706060732623L;
 
 	public List<Opcion> obtenerOpcionesPorUsuario(Usuario usuario) {
 		return opcionDAO.findOpciones(usuario);

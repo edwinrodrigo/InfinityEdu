@@ -7,13 +7,15 @@ import java.util.Map;
 
 import edu.ec.infinity.util.constantes.ICamposTablas;
 import edu.ec.infinity.util.constantes.IEsquemas;
+import edu.ec.infinity.util.constantes.IEtiquetas;
+import edu.ec.infinity.util.constantes.IRutas;
 import edu.ec.infinity.util.constantes.ITablas;
 import edu.ec.infinity.util.type.IStringValuedEnum;
 import edu.ec.infinity.util.type.StringValuedEnumReflect;
 import edu.ec.infinity.util.type.StringValuedEnumType;
 
 public abstract class DominioGeneric<T extends DominioGeneric<T>>
-		implements Generic<String, String>, ITablas, ICamposTablas, IEsquemas, Serializable {
+		implements Generic<String, String>, ITablas, ICamposTablas, IEsquemas, IRutas, IEtiquetas, Serializable {
 
 	private static final long serialVersionUID = -3536581547513733717L;
 
@@ -114,6 +116,122 @@ public abstract class DominioGeneric<T extends DominioGeneric<T>>
 		public static final List<EstadoAI> LIST = Arrays.asList(EstadoAI.values());
 
 		private EstadoAI(String value) {
+			this.value = value;
+			this.labelKey = StringValuedEnumReflect.getLabelKeyFromEnum(this);
+		}
+
+		@Override
+		public String getValue() {
+			return this.value;
+		}
+
+		@Override
+		public String getKey() {
+			return labelKey;
+		}
+
+		@Override
+		public String getDescription() {
+			return getValue();
+		}
+
+	}
+
+	public enum Sexo implements IStringValuedEnum<Sexo> {
+		MASCULINO("M"), FEMENINO("F"),;
+
+		public static class Type extends StringValuedEnumType<Sexo> {
+		}
+
+		public static final String TYPE = "edu.ec.infinity.dominio.generic.DominioGeneric$Sexo$Type";
+
+		public boolean isMasculino() {
+			return this.equals(MASCULINO);
+		}
+
+		public boolean isFemenino() {
+			return this.equals(FEMENINO);
+		}
+
+		private String value;
+		private String labelKey;
+
+		/**
+		 * Map para ser usado en f:selectItems, cuyas entradas cumplen con la regla:<br>
+		 * (key=item's label , value=item's value)
+		 */
+		public static Map<String, Sexo> LABELED_MAP;
+
+		/**
+		 * Lists para iteraciones (e.g. suggestions)
+		 */
+		public static final List<Sexo> LIST = Arrays.asList(Sexo.values());
+
+		private Sexo(String value) {
+			this.value = value;
+			this.labelKey = StringValuedEnumReflect.getLabelKeyFromEnum(this);
+		}
+
+		@Override
+		public String getValue() {
+			return this.value;
+		}
+
+		@Override
+		public String getKey() {
+			return labelKey;
+		}
+
+		@Override
+		public String getDescription() {
+			return getValue();
+		}
+
+	}
+	
+	public enum EstadoCivil implements IStringValuedEnum<EstadoCivil> {
+		SOLTERO("S"), CASADO("C"), DIVORCIADO("D"), VIUDO("V"), UNIONHECHO("U"),;
+
+		public static class Type extends StringValuedEnumType<EstadoCivil> {
+		}
+
+		public static final String TYPE = "edu.ec.infinity.dominio.generic.DominioGeneric$EstadoCivil$Type";
+
+		public boolean isSoltero() {
+			return this.equals(SOLTERO);
+		}
+
+		public boolean isCasado() {
+			return this.equals(CASADO);
+		}
+		
+		public boolean isDivorciado() {
+			return this.equals(DIVORCIADO);
+		}
+
+		public boolean isViudo() {
+			return this.equals(VIUDO);
+		}
+		
+		public boolean isUnionHecho() {
+			return this.equals(UNIONHECHO);
+		}
+
+		private String value;
+		private String labelKey;
+
+		/**
+		 * Map para ser usado en f:selectItems, cuyas entradas cumplen con la regla:<br>
+		 * (key=item's label , value=item's value)
+		 */
+		public static Map<String, EstadoCivil> LABELED_MAP;
+
+		/**
+		 * Lists para iteraciones (e.g. suggestions)
+		 */
+		public static final List<EstadoCivil> LIST = Arrays.asList(EstadoCivil.values());
+
+		private EstadoCivil(String value) {
 			this.value = value;
 			this.labelKey = StringValuedEnumReflect.getLabelKeyFromEnum(this);
 		}

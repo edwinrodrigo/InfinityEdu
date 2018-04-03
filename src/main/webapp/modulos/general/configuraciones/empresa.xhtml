@@ -1,0 +1,204 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+           
+        <div class="ui-g ui-fluid">
+        
+        	<h:form>
+        	
+	        	<div class="ui-g-12 ui-lg-3">
+	            	<div class="card card-w-title">
+	            		<p:panelGrid id="pgListado" columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+	            			
+	            			<f:facet name="header">
+	            				<h1>#{msg.Lista}</h1>
+	            			</f:facet>
+	            			
+		            		<p:dataTable value="#{empresaMB.listaEmpresas}" var="emp" type="unordered" itemType="none" paginator="true" rows="10"  styleClass="cars-datalist" paginatorPosition="top"
+		            			emptyMessage="#{msg.NoHayRegistrosEcontrados}" >
+		            			<p:column>
+		            				<h:outputText value="#{emp.codigo} - #{emp.nombre}"/>
+		            			</p:column>
+		            			<p:column width="20">
+		            				<p:commandButton title="#{msg.Editar}" icon="fa fa-search" 
+							        	update="#{p:component('pgDatos')} #{p:component('pgLogo')} #{p:component('pgUbicacion')} #{p:component('pgActions')}"
+							        	actionListener="#{empresaMB.cargarEmpresa}">
+							            <f:setPropertyActionListener value="#{emp}" target="#{empresaMB.empresaSeleccion}" />
+							        </p:commandButton>	
+		            			</p:column>
+						    </p:dataTable>
+						    
+					    </p:panelGrid>
+	            	</div>
+	            </div>
+	        	
+	        	<div class="ui-g-12 ui-lg-9">
+	            	<div class="card card-w-title">
+	            		<p:panelGrid id="pgDatos" columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+	            			
+	            			<f:facet name="header">
+	            				<h1>#{msg.DatosGenerales}</h1>
+	            			</f:facet>
+			            	
+			            	<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+			            		<p:outputLabel for="cod" value="#{msg.Codigo}" />
+			            		<p:inputText id="cod" placeholder="#{msg.Codigo}" value="#{empresaMB.empresaSeleccion.codigo}" />
+			            		<p:outputLabel for="nom" value="#{msg.Nombre}" />
+			            		<p:inputText id="nom" placeholder="#{msg.Nombre}" value="#{empresaMB.empresaSeleccion.nombre}" />
+		            		</p:panelGrid>
+		            		
+		            		<p:panelGrid columns="3" layout="grid" styleClass="ui-panelgrid-blank form-group">
+		            		
+		            			<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+		            				<p:outputLabel for="pai" value="#{msg.Pais}" />
+		            				<p:selectOneMenu id="pai" placeholder="#{msg.Pais}" value="#{empresaMB.empresaSeleccion.pais}" converter="convertidorOneMenu" panelStyle="width:180px" 
+				            			effect="fade" var="c" filter="true" filterMatchMode="contains">
+				            			<p:ajax event="change" partialSubmit="true" process="@this #{p:component('pai')}" update="#{p:component('prov')}" 
+				            				listener="#{empresaMB.obtenerProvincias()}" />
+				            			<f:selectItem itemLabel="#{msg.Seleccione}" />
+							            <f:selectItems value="#{empresaMB.listaPaises}" var="value" itemLabel="#{value.descripcion}" itemValue="#{value}" />
+							            <p:column style="width:20%">
+							                <h:outputText value="#{c.codigo}" />
+							            </p:column>
+							            <p:column>
+							                <h:outputText value="#{c.descripcion}" />
+							            </p:column>
+							        </p:selectOneMenu>
+		            			</p:panelGrid>
+		            			
+		            			<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">		
+		            				<p:outputLabel for="prov" value="#{msg.Provincia}/#{msg.Estado}" />
+		            				<p:selectOneMenu id="prov" placeholder="#{msg.Provincia}/#{msg.Estado}" value="#{empresaMB.empresaSeleccion.provincia}" converter="convertidorOneMenu" panelStyle="width:180px" 
+				            			effect="fade" var="c" filter="true" filterMatchMode="contains">
+				            			<p:ajax event="change" partialSubmit="true" process="@this #{p:component('prov')}" update="#{p:component('ciu')}"
+				            				listener="#{empresaMB.obtenerCiudades()}" />
+				            			<f:selectItem itemLabel="#{msg.Seleccione}" />
+							            <f:selectItems value="#{empresaMB.listaProvincias}" var="value" itemLabel="#{value.descripcion}" itemValue="#{value}" />
+							            <p:column style="width:30%">
+							                <h:outputText value="#{c.codigo}" />
+							            </p:column>
+							            <p:column>
+							                <h:outputText value="#{c.descripcion}" />
+							            </p:column>
+							        </p:selectOneMenu>
+		            			</p:panelGrid>
+		            			
+		            			<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+		            				<p:outputLabel for="ciu" value="#{msg.Ciudad}" />
+		            				<p:selectOneMenu id="ciu" placeholder="#{msg.Ciudad}" value="#{empresaMB.empresaSeleccion.ciudad}" converter="convertidorOneMenu" panelStyle="width:180px" 
+				            			effect="fade" var="c" filter="true" filterMatchMode="contains">
+				            			<p:ajax event="change" partialSubmit="true" process="@this #{p:component('ciu')}" />
+				            			<f:selectItem itemLabel="#{msg.Seleccione}" />
+							            <f:selectItems value="#{empresaMB.listaCiudades}" var="value" itemLabel="#{value.descripcion}" itemValue="#{value}" />
+							            <p:column style="width:40%">
+							                <h:outputText value="#{c.codigo}" />
+							            </p:column>
+							            <p:column>
+							                <h:outputText value="#{c.descripcion}" />
+							            </p:column>
+							        </p:selectOneMenu>
+								</p:panelGrid>
+		            			
+		            		</p:panelGrid>
+		            		
+		            		<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank form-group">
+		            		
+		            			<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+		            				<p:outputLabel for="rec" value="#{msg.Rector}" />
+		            				<p:inputText id="rec" placeholder="#{msg.Rector}" value="#{empresaMB.empresaSeleccion.rector}" />
+		            			</p:panelGrid>
+		            			<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+		            				<p:outputLabel for="prec" value="#{msg.Profesion}" />
+		            				<p:inputText id="prec" placeholder="#{msg.Profesion}" value="#{empresaMB.empresaSeleccion.profesionRector}" />
+		            			</p:panelGrid>
+		            			
+		            			<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+		            				<p:outputLabel for="vir" value="#{msg.Vicerrector}" />
+		            				<p:inputText id="vir" placeholder="#{msg.Vicerrector}" value="#{empresaMB.empresaSeleccion.vicerrector}" />
+		            			</p:panelGrid>
+		            			<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+				            		<p:outputLabel for="pvir" value="#{msg.Profesion}" />
+				            		<p:inputText id="pvir" placeholder="#{msg.Profesion}" value="#{empresaMB.empresaSeleccion.profesionVicerrector}" />
+				            	</p:panelGrid>
+				            	
+		            			<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+		            				<p:outputLabel for="sec" value="#{msg.Secretario}" />
+		            				<p:inputText id="sec" placeholder="#{msg.Secretario}" value="#{empresaMB.empresaSeleccion.secretario}" />
+		            			</p:panelGrid>
+		            			<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+				            		<p:outputLabel for="psec" value="#{msg.Profesion}" />
+				            		<p:inputText id="psec" placeholder="#{msg.Profesion}" value="#{empresaMB.empresaSeleccion.profesionSecretario}" />
+				            	</p:panelGrid>
+				            	
+		            			<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+		            				<p:outputLabel for="rl" value="#{msg.RepresentanteLegal}" />
+		            				<p:inputText id="rl" placeholder="#{msg.RepresentanteLegal}" value="#{empresaMB.empresaSeleccion.representanteLegal}" />
+		            			</p:panelGrid>
+		            			<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+				            		<p:outputLabel for="prl" value="#{msg.Profesion}" />
+			            			<p:inputText id="prl" placeholder="#{msg.Profesion}" value="#{empresaMB.empresaSeleccion.profesionRepresentanteLegal}" />
+		            			</p:panelGrid>
+		            		
+		            		</p:panelGrid>
+			            		
+		            	</p:panelGrid>
+	            	</div>
+	            </div>
+	            
+	            <div class="ui-g-12 ui-lg-5">
+	            	<div class="card card-w-title">
+	            		<p:panelGrid id="pgLogo" columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+	            			
+	            			<f:facet name="header">
+	            				<h1>#{msg.Logo}/#{msg.Imagen}</h1>
+	            			</f:facet>
+	            			
+	            			<p:fileUpload mode="advanced" dragDropSupport="false" sizeLimit="#{empresaMB.sizeLimit}" fileLimit="#{empresaMB.fileLimit}" allowTypes="#{empresaMB.allowTypes}"
+	            				process="@this" update="@this" fileUploadListener="#{empresaMB.actionUpload}"
+	            				label="#{msg.Escoger}" cancelLabel="#{msg.Cancelar}" uploadLabel="#{msg.Subir}" />
+	            				
+	            			<p:panelGrid id="logo" columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group" style="text-align:center">
+	            				<h:graphicImage value="/mostrarImagen?rutaLogo=#{empresaMB.empresaSeleccion.urlLogoCompleto}" width="200px" height="150px" />
+	            			</p:panelGrid>
+	            			
+	            		</p:panelGrid>
+	            	</div>
+	            </div>
+	            
+	            <div class="ui-g-12 ui-lg-7">
+	            	<div class="card card-w-title">
+	            		<p:panelGrid id="pgUbicacion" columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+	            			
+	            			<f:facet name="header">
+	            				<h1>#{msg.Ubicacion}</h1>
+	            			</f:facet>
+	            			
+	            			<p:gmap center="#{empresaMB.empresaSeleccion.ubicacion}" model="#{empresaMB.mapModel}" zoom="15" type="ROADMAP" style="width:100%;height:400px">
+	            				<p:ajax event="markerDrag" listener="#{empresaMB.actualizarUbicacion}" />
+	            			</p:gmap>
+	            			
+	            		</p:panelGrid>
+	            	</div>
+	            </div>
+	            
+	            <div class="ui-g-12 ui-lg-12">
+	            	<div class="card card-w-title">
+	            		<p:panelGrid id="pgActions" columns="1" styleClass="ui-panelgrid-blank form-group" >
+		            		<p:commandButton value="#{msg.Guardar}" styleClass="green-btn raised-btn" style="width:150px;height:30px"
+		            			process="@this #{p:component('pgDatos')} #{p:component('pgLogo')} #{p:component('pgUbicacion')}"
+		            			update="@this #{p:component('pgDatos')} #{p:component('pgLogo')} #{p:component('pgUbicacion')} #{p:component('imageCompany')}"
+		            			partialSubmit="true" actionListener="#{empresaMB.actionSave}"
+		            			disabled="#{empresaMB.empresaSeleccion.codigo eq null}" />
+		            	</p:panelGrid>
+		            </div>
+	            </div>
+            
+            </h:form>
+            
+    	</div>
+    	
+    	
+
+</ui:composition>

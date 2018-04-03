@@ -556,11 +556,11 @@
   background-size: cover;
   overflow: hidden; }
   .exception-body.error {
-    background-image: url("#{resource['paradise-layout:images/exception/error-bg.png']}"); }
+    background-image: url("#{resource['paradise-layout:images/exception/exception-bg.png']}"); }
   .exception-body.access {
-    background-image: url("#{resource['paradise-layout:images/exception/access-bg.png']}"); }
+    background-image: url("#{resource['paradise-layout:images/exception/exception-bg.png']}"); }
   .exception-body.notfound {
-    background-image: url("#{resource['paradise-layout:images/exception/404-bg.png']}"); }
+    background-image: url("#{resource['paradise-layout:images/exception/exception-bg.png']}"); }
   .exception-body .exception-panel {
     width: 400px;
     margin: 0 auto;
@@ -1249,18 +1249,18 @@ body {
   .layout-wrapper .layout-footer {
     margin-left: 0; }
   .layout-wrapper .topbar .topbar-logo {
-    width: 144px;
+    width: 90px;
     display: block;
-    margin: 0 auto; }
+    margin: 5px 0 0 35px; }
   .layout-wrapper .topbar .topbar-search-icon, .layout-wrapper .topbar .topbar-search {
     display: none; }
   .layout-wrapper .topbar #menu-button {
-    font-size: 24px;
+    font-size: 20px;
     float: left;
     margin-left: 0;
-    margin-top: -36px; }
+    margin-top: -25px; }
   .layout-wrapper .topbar #user-display {
-    margin-top: -42px; }
+    margin-top: -35px; }
     .layout-wrapper .topbar #user-display .username {
       display: none; }
   .layout-wrapper.layout-menu-active .topbar {

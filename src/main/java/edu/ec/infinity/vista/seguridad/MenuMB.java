@@ -14,10 +14,11 @@ import org.primefaces.model.menu.DefaultSubMenu;
 import org.primefaces.model.menu.MenuModel;
 
 import edu.ec.infinity.dominio.seguridad.Opcion;
+import edu.ec.infinity.vista.generic.GenericMB;
 
 @RequestScoped
 @ManagedBean
-public class MenuMB extends CommonController implements Serializable {
+public class MenuMB extends GenericMB implements Serializable {
 
 	private static final long serialVersionUID = 5538285286840627041L;
 
@@ -26,10 +27,10 @@ public class MenuMB extends CommonController implements Serializable {
 	@PostConstruct
 	public void init() {
 		model = new DefaultMenuModel();
-		contruirMenu();
+		construirMenu();
 	}
 
-	public void contruirMenu() {
+	public void construirMenu() {
 		List<Opcion> padres = new ArrayList<Opcion>();
 		List<Opcion> opcionesDisponibles = servicioAutenticacion.obtenerOpcionesPorUsuario(getUsuario());
 		for (Opcion opcion : opcionesDisponibles) {
@@ -40,15 +41,15 @@ public class MenuMB extends CommonController implements Serializable {
 
 		for (Opcion padre : padres) {
 			if(padre.getUrl() != null && !"".equals(padre.getUrl())) {
-				DefaultMenuItem menuhija = new DefaultMenuItem(padre.getNombre());
+				DefaultMenuItem menuhija = new DefaultMenuItem(getProperty(padre.getNombre()));
 				menuhija.setOutcome(padre.getUrl());
 				menuhija.setIcon(padre.getIcono());
 				model.addElement(menuhija);
 			}else {
-				DefaultSubMenu menuPadre = new DefaultSubMenu(padre.getNombre(), padre.getIcono());
+				DefaultSubMenu menuPadre = new DefaultSubMenu(getProperty(padre.getNombre()), padre.getIcono());
 				for (Opcion hija : opcionesDisponibles) {
 					if (hija.getPadre() != null && hija.getPadre().getId().equals(padre.getId())) {
-						DefaultMenuItem menuhija = new DefaultMenuItem(hija.getNombre());
+						DefaultMenuItem menuhija = new DefaultMenuItem(getProperty(hija.getNombre()));
 						menuhija.setOutcome(hija.getUrl());
 						menuhija.setIcon(hija.getIcono());
 						menuPadre.addElement(menuhija);
@@ -62,4 +63,5 @@ public class MenuMB extends CommonController implements Serializable {
 	public MenuModel getModel() {
 		return model;
 	}
+
 }

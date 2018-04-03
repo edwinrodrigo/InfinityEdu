@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,65 +16,72 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Type;
+
 import edu.ec.infinity.dominio.seguridad.Usuario;
+import edu.ec.infinity.util.constantes.ICamposTablas;
 import edu.ec.infinity.util.constantes.IEsquemas;
 import edu.ec.infinity.util.constantes.ITablas;
 
 @Entity
 @Table(name = ITablas.PERSONA, schema = IEsquemas.GENERAL)
-public class Persona extends GeneralGeneric<Persona>{
+public class Persona extends GeneralGeneric<Persona> {
 
 	private static final long serialVersionUID = -4638153087320043590L;
-	
+
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Size(max=15)
+
+	@Size(max = 15)
 	private String identificacion;
-	
-	@Size(max=50)
+
+	@Size(max = 50)
 	private String primerNombre;
-	
-	@Size(max=50)
+
+	@Size(max = 50)
 	private String segundoNombre;
-	
-	@Size(max=50)
+
+	@Size(max = 50)
 	private String primerApellido;
-	
-	@Size(max=50)
+
+	@Size(max = 50)
 	private String segundoApellido;
-	
-	@Size(max=1)
-	private String sexo;
-	
-	@Size(max=300)
+
+	@Type(type = Sexo.TYPE)
+	private Sexo sexo;
+
+	@Size(max = 300)
 	private String domicilio;
-	
-	@Size(max=50)
+
+	@Size(max = 50)
 	private String email;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
-	
-	@Size(max=50)
+
+	@Size(max = 50)
 	private String profesion;
-	
-	@Size(max=50)
+
+	@Size(max = 50)
 	private String ocupacion;
-	
-	@Size(max=1)
-	private String estadoCivil;
-	
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="empresa_id")
+
+	@Type(type = EstadoCivil.TYPE)
+	private EstadoCivil estadoCivil;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = EMPRESA_ID)
 	private Empresa empresa;
 	
-	@OneToOne(mappedBy="persona")
+	@Size(max = 300)
+	private String urlAvatar;
+
+	@OneToOne(mappedBy = ICamposTablas.PERSONA)
 	private Usuario usuario;
-	
+
 	@Transient
 	private String nombrePila;
-	
+
 	@Override
 	public Long getId() {
 		return id;
@@ -123,11 +132,11 @@ public class Persona extends GeneralGeneric<Persona>{
 		this.segundoApellido = segundoApellido;
 	}
 
-	public String getSexo() {
+	public Sexo getSexo() {
 		return sexo;
 	}
 
-	public void setSexo(String sexo) {
+	public void setSexo(Sexo sexo) {
 		this.sexo = sexo;
 	}
 
@@ -171,11 +180,11 @@ public class Persona extends GeneralGeneric<Persona>{
 		this.ocupacion = ocupacion;
 	}
 
-	public String getEstadoCivil() {
+	public EstadoCivil getEstadoCivil() {
 		return estadoCivil;
 	}
 
-	public void setEstadoCivil(String estadoCivil) {
+	public void setEstadoCivil(EstadoCivil estadoCivil) {
 		this.estadoCivil = estadoCivil;
 	}
 
@@ -185,6 +194,14 @@ public class Persona extends GeneralGeneric<Persona>{
 
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
+	}
+
+	public String getUrlAvatar() {
+		return urlAvatar;
+	}
+
+	public void setUrlAvatar(String urlAvatar) {
+		this.urlAvatar = urlAvatar;
 	}
 
 	public Usuario getUsuario() {
@@ -202,7 +219,5 @@ public class Persona extends GeneralGeneric<Persona>{
 	public void setNombrePila(String nombrePila) {
 		this.nombrePila = nombrePila;
 	}
-	
-	
 
 }

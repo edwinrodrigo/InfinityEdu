@@ -1,0 +1,75 @@
+@charset "ISO-8859-1";
+/******************************/
+/*           Custom           */
+/******************************/
+.layout-wrapper .topbar .company-logo {
+	position: absolute;
+	vertical-align: top;
+	margin-left: 220px;
+	margin-top: -60px
+}
+
+.layout-wrapper .topbar .company-logo img {
+	width: 100px;
+	height: 75px;
+}
+
+.layout-wrapper .topbar .company-name {
+	font-size: 20px;
+	vertical-align: 100%;
+}
+
+.layout-wrapper .topbar .idioma {
+	position: relative;
+	float: right;
+	vertical-align: middle;
+	margin-top: 8px;
+	margin-right: 100px;
+}
+
+.layout-wrapper .topbar .mobile-idioma {
+	display: none;
+}
+
+.exception-body.working {
+	background-image:
+		url("#{resource['paradise-layout:images/exception/exception-bg.png']}");
+}
+
+@media ( max-width : 768px) {
+	.layout-wrapper .topbar .company-name {
+		display: none;
+	}
+	.layout-wrapper .topbar .idioma {
+		position: relative;
+		float: right;
+		vertical-align: middle;
+		margin-top: 8px;
+		margin-right: 80px;
+	}
+}
+
+@media ( max-width : 640px) {
+	.layout-wrapper .topbar .mobile-idioma {
+		display: block;
+	}
+	.layout-wrapper .topbar .company-logo {
+		position: absolute;
+		vertical-align: top;
+		margin-left: 130px;
+		margin-top: -50px
+	}
+	.layout-wrapper .topbar .company-logo img {
+		width: 100px;
+		height: 75px;
+	}
+	.layout-wrapper .topbar .company-name {
+		display: none;
+	}
+	.layout-wrapper .topbar .idioma {
+		display: none;
+	}
+	.layout-wrapper .topbar .topbar-logo img {
+		height: 30px;
+	}
+}

@@ -8,7 +8,7 @@
 	
 	<h:form>
 	    <div class="topbar">
-	        <h:link outcome="/dashboard" styleClass="topbar-logo">
+	        <h:link outcome="#{topBarMB.paginaHome}" styleClass="topbar-logo">
 	            <p:graphicImage name="images/#{guestPreferences.layout == 'default' ? 'logo-infinity-completo.png' : 'logo-infinity-completo.png'}" style="border: 0px;" library="paradise-layout" />
 	        </h:link>
 	        
@@ -18,16 +18,41 @@
 	        
 	        <a href="#" id="user-display">
 	            <span class="username">#{topBarMB.usuario.persona.nombrePila}</span>
-	            <p:graphicImage name="images/#{topBarMB.usuario.persona.sexo == 'M' ? 'avatarM.png' : 'avatarF.png'}" library="paradise-layout" style="border: 0px;"/>
+	            <p:graphicImage name="images/#{topBarMB.usuario.persona.sexo.masculino ? 'avatarM.png' : 'avatarF.png'}" library="paradise-layout" style="border: 0px;"/>
 	            <i class="fa fa-angle-down"></i>
 	        </a>
+            
+	        <div class="company-logo">
+		        <h:graphicImage id="imageCompany" value="/mostrarImagen?rutaLogo=#{topBarMB.empresa.urlLogoCompleto}"/>
+		        <a class="company-name">#{topBarMB.empresa.nombre}</a>
+	        </div>
 	        
-	        <label for="topbar-search">
-	            <i class="fa fa-search topbar-search-icon"></i>
-	        </label>
-	        <input type="text" class="topbar-search" placeholder="Type your search here" id="topbar-search" />
-	
+<!-- 	        <input type="text" class="topbar-search" placeholder="Type your search here" id="topbar-search" />	 -->
+			
+
+			<div class="idioma">
+				#{msg.Idioma}:
+				<p:selectOneMenu value="#{localeMB.language}" onchange="submit()" style="vertical-align:middle;">
+					<f:selectItem itemValue="es" itemLabel="#{msg.Espanol}" />
+					<f:selectItem itemValue="en" itemLabel="#{msg.Ingles}" />
+				</p:selectOneMenu>
+			</div>
+			
+			
 	        <ul id="topbar-menu" class="fadeInDown animated">
+	        	<li class="mobile-idioma">
+	        		<a href="#">
+	                    <span class="topbar-item-name">#{msg.Idioma}</span>
+	                </a>
+	                <ul>
+	                    <li role="menuitem">
+	                        <p:commandLink actionListener="#{localeMB.setEspanol}" update="@all" value="#{msg.Espanol}" />
+	                    </li>
+	                    <li role="menuitem">
+	                        <p:commandLink actionListener="#{localeMB.setIngles}" update="@all" value="#{msg.Ingles}" />
+	                    </li>
+	                </ul>
+	        	</li>
 	            <li>
 	                <a href="#">
 	                    <i class="topbar-icon fa fa-fw fa-user"></i>
@@ -103,7 +128,7 @@
 	                <ul>
 	                    <li role="menuitem">
 	                        <a href="#" class="topbar-message">
-	                            <p:graphicImage name="images/avatar1.png" library="paradise-layout" width="35"/>
+	                            <p:graphicImage name="images/avatar2.png" library="paradise-layout" width="35"/>
 	                            <span>Give me a call</span>
 	                        </a>
 	                    </li>
